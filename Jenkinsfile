@@ -7,12 +7,6 @@ pipeline {
   }
 
   stages {
-    stage('Checkout') {
-      steps {
-        git 'https://github.com/Dan23H/GamesRepo.git'
-      }
-    }
-
     stage('Install & Test Backend') {
       steps {
         dir('backend') {

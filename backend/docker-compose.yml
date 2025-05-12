@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - MONGO_URI=mongodb://mongo1:27017,mongo2:27018,mongo3:27019/game_catalog?replicaSet=rs0
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
+
+  mongo1:
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo1-data:/data/db
+    command: ["mongod", "--replSet", "rs0", "--bind_ip_all"]
+
+  mongo2:
+    image: mongo:6.0
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo2-data:/data/db
+    command: ["mongod", "--replSet", "rs0", "--bind_ip_all"]
+
+  mongo3:
+    image: mongo:6.0
+    ports:
+      - "27019:27017"
+    volumes:
+      - mongo3-data:/data/db
+    command: ["mongod", "--replSet", "rs0", "--bind_ip_all"]
+
+volumes:
+  mongo1-data:
+  mongo2-data:
+  mongo3-data:

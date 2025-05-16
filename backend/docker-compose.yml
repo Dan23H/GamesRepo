@@ -37,6 +37,20 @@ services:
       - mongo3-data:/data/db
     command: ["mongod", "--replSet", "rs0", "--bind_ip_all"]
 
+  mongo-setup:
+    image: mongo:6.0
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
+    volumes:
+      - ./init-replica.js:/init-replica.js:ro
+    entrypoint: >
+      bash -c "
+        sleep 10 &&
+        mongosh 'mongodb://mongo1:27017' /init-replica.js || true
+      "
+
 volumes:
   mongo1-data:
   mongo2-data:

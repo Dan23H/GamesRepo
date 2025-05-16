@@ -3,3 +3,8 @@ echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]"   https://pkg.jenki
 sudo apt-get update
 sudo apt-get install -y fontconfig openjdk-21-jre
 sudo apt-get install -y jenkins
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt-get install -y nodejs
+sudo apt-get install -y docker.io
+sudo usermod -aG docker jenkins
+
